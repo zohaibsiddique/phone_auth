@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (authService.getUser() != null) {
       Timer(Duration(seconds: 3), () {
         Util.potUntil(context, MyApp.route);
-        Util.navigate(context, RegistrationInfoSC.route);
+        Util.navigate(context, HomeSC.route);
       });
       print("User UID: " + authService.getUser()?.uid);
     } else {

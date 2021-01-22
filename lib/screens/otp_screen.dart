@@ -40,6 +40,7 @@ class _OtpScreenState extends State<OtpScreen> {
       });
     });
 
+    //TODO: needs to implement auto retrieval OTP and directly navigate to Registration info screen
     authService.onAutoAuthenticateTimeOut(() {
       _scaffoldKey.currentState.showSnackBar(
           Util.showSnackBar("OTP timeout! write OTP yourself.", "OK", 5));

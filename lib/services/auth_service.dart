@@ -38,8 +38,6 @@ class AuthService{
   final signInComplete = BehaviorSubject<bool>();
   final signInError = BehaviorSubject<bool>();
 
-
-
   void SignOut() {
     authInstance.signOut().then((value) {
       _onSignOutCalledCallback?.call();
@@ -57,11 +55,6 @@ class AuthService{
   Stream<User> listenAuthStateChanges() {
     return authInstance.authStateChanges();
   }
-
-  //setters for callbacks
-  // void onSMSSent(Function() callback) {
-  //   _callback = callback;
-  // }
 
   void onSignOut(Function() callback) {
     _onSignOutCalledCallback = callback;
