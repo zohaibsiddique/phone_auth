@@ -70,16 +70,20 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
   TextEditingController nameController = TextEditingController();
 
   Future uploadFile() async {
-    Util.showProgressDialog(context);
-    Reference storageReference = FirebaseStorage.instance.ref().child(UID);
-    UploadTask uploadTask = storageReference.putFile(File(_imagePath));
-    await uploadTask.then((e) {print("Upload Complete ${e.toString()}");});
-    print('File Uploaded');
-    storageReference.getDownloadURL().then((fileURL) {
-      print("File URL ${fileURL.toString()}");
-      uploadedPath = fileURL.toString();
-    });
-    Util.pop(context);
+    try {
+      Util.showProgressDialog(context);
+      Reference storageReference = FirebaseStorage.instance.ref().child(UID);
+      UploadTask uploadTask = storageReference.putFile(File(_imagePath));
+      await uploadTask.then((e) {print("Upload Complete ${e.toString()}");});
+      print('File Uploaded');
+      storageReference.getDownloadURL().then((fileURL) {
+            print("File URL ${fileURL.toString()}");
+            uploadedPath = fileURL.toString();
+          });
+      Util.pop(context);
+    } catch (e) {
+      Util.pop(context);
+    }
   }
 
   Future getImage() async {
