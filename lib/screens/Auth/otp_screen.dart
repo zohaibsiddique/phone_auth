@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/OTP/registeration_info_sc.dart';
+import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/Auth/registeration_info_sc.dart';
 import 'package:phone_auth/services/auth_service.dart';
 import 'package:phone_auth/ui_components/main_button.dart';
 import 'package:phone_auth/util/colors.dart';

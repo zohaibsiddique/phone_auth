@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/OTP/otp_screen.dart';
+import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/Auth/otp_screen.dart';
 import 'package:phone_auth/services/auth_service.dart';
 import 'package:phone_auth/services/network_status_service.dart';
 import 'package:phone_auth/ui_components/country_code_layout.dart';
