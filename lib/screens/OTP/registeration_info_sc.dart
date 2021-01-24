@@ -17,9 +17,9 @@ import 'package:phone_auth/ui_components/img_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 
-import '../main.dart';
-import 'home_sc.dart';
-import 'package:phone_auth/screens/registeration_info_sc.dart';
+import '../../main.dart';
+import '../home/home_sc.dart';
+import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/OTP/registeration_info_sc.dart';
 import 'package:phone_auth/services/auth_service.dart';
 import 'package:phone_auth/ui_components/main_button.dart';
 import 'package:phone_auth/util/colors.dart';

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:phone_auth/screens/home_sc.dart';
-import 'package:phone_auth/screens/otp_screen.dart';
-import 'package:phone_auth/screens/registeration_info_sc.dart';
-import 'package:phone_auth/screens/sign_in_sc.dart';
+import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/home/home_sc.dart';
+import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/OTP/otp_screen.dart';
+import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/OTP/registeration_info_sc.dart';
+import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/OTP/sign_in_sc.dart';
 import 'package:phone_auth/services/auth_service.dart';
 import 'package:phone_auth/services/database_service.dart';
 import 'package:phone_auth/util/constants.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthService(),
           ),
           Provider(
-            create: (context) => DatabaseService(),
+            create: (context) => DatabaseService(AuthService()),
           ),
         ],
         child: MaterialApp(
