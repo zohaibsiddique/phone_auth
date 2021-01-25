@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:phone_auth/main.dart';
+import 'package:phone_auth/screens/Auth/registeration_info_sc.dart';
 import 'package:phone_auth/screens/otp_screen.dart';
-import 'package:phone_auth/screens/registeration_info_sc.dart';
 import 'package:phone_auth/services/auth_service.dart';
 import 'package:phone_auth/services/network_status_service.dart';
 import 'package:phone_auth/ui_components/country_code_layout.dart';
 import 'package:phone_auth/ui_components/network_aware_widget.dart';
-import '../main.dart';
 import 'package:provider/provider.dart';
 import 'package:phone_auth/ui_components/main_button.dart';
 import 'package:phone_auth/util/constants.dart';

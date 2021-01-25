@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/home/home_sc.dart';
-import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/Auth/otp_screen.dart';
-import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/Auth/registeration_info_sc.dart';
-import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/Auth/sign_in_sc.dart';
+import 'package:phone_auth/screens/Auth/otp_screen.dart';
+import 'package:phone_auth/screens/Auth/sign_in_sc.dart';
+import 'package:phone_auth/screens/auth/registeration_info_sc.dart';
+import 'package:phone_auth/screens/home/home_sc.dart';
 import 'package:phone_auth/services/auth_service.dart';
 import 'package:phone_auth/services/database_service.dart';
 import 'package:phone_auth/util/constants.dart';

@@ -12,14 +12,13 @@ import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:phone_auth/entities/Place.dart';
 import 'package:phone_auth/entities/Users.dart';
+import 'package:phone_auth/main.dart';
+import 'package:phone_auth/screens/home/home_sc.dart';
 import 'package:phone_auth/services/database_service.dart';
 import 'package:phone_auth/ui_components/img_picker.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 
-import '../../main.dart';
-import '../home/home_sc.dart';
-import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/Auth/registeration_info_sc.dart';
 import 'package:phone_auth/services/auth_service.dart';
 import 'package:phone_auth/ui_components/main_button.dart';
 import 'package:phone_auth/util/colors.dart';
@@ -28,7 +27,6 @@ import 'package:phone_auth/util/styles.dart';
 import 'package:phone_auth/util/util.dart';
 import 'package:provider/provider.dart';
 
-
 class RegistrationInfoSC extends StatefulWidget {
   static String route = '/reg_info';
   @override
@@ -36,8 +34,8 @@ class RegistrationInfoSC extends StatefulWidget {
 }
 
 class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
-
-  AuthService authService; DatabaseService dbService;
+  AuthService authService;
+  DatabaseService dbService;
   var UID;
 
   static List<Place> places = [
@@ -48,9 +46,9 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
     Place(name: "Lahore"),
   ];
 
-  final _placesList = places.map((place) => MultiSelectItem<Place>(place, place.name)).toList();
+  final _placesList =
+      places.map((place) => MultiSelectItem<Place>(place, place.name)).toList();
   List<Place> _selectedPlaces = [];
-
 
   @override
   void initState() {
@@ -74,12 +72,14 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
       Util.showProgressDialog(context);
       Reference storageReference = FirebaseStorage.instance.ref().child(UID);
       UploadTask uploadTask = storageReference.putFile(File(_imagePath));
-      await uploadTask.then((e) {print("Upload Complete ${e.toString()}");});
+      await uploadTask.then((e) {
+        print("Upload Complete ${e.toString()}");
+      });
       print('File Uploaded');
       storageReference.getDownloadURL().then((fileURL) {
-            print("File URL ${fileURL.toString()}");
-            uploadedPath = fileURL.toString();
-          });
+        print("File URL ${fileURL.toString()}");
+        uploadedPath = fileURL.toString();
+      });
       Util.pop(context);
     } catch (e) {
       Util.pop(context);
@@ -87,13 +87,21 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
   }
 
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 60);
-    setState(() {if (pickedFile != null) {_imagePath = pickedFile.path;} else {}});
+    final pickedFile =
+        await picker.getImage(source: ImageSource.gallery, imageQuality: 60);
+    setState(() {
+      if (pickedFile != null) {
+        _imagePath = pickedFile.path;
+      } else {}
+    });
 
-    uploadFile().timeout(Duration(seconds: 30), onTimeout:(){
+    uploadFile().timeout(Duration(seconds: 30), onTimeout: () {
       Util.pop(context);
-      setState(() {_imagePath = "";});
-      Util.showToastMessage(Constants.upload_image_error, Colors.white, Colors.black);
+      setState(() {
+        _imagePath = "";
+      });
+      Util.showToastMessage(
+          Constants.upload_image_error, Colors.white, Colors.black);
     });
   }
 
@@ -113,16 +121,31 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(Constants.let_us_know, style: Styles.screenTitle,),
-                SizedBox(height: 30,),
-                Center(child: ImgPicker(width: 100,height: 100, onTap: getImage, path: _imagePath,)),
-                SizedBox(height: 20,),
+                Text(
+                  Constants.let_us_know,
+                  style: Styles.screenTitle,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Center(
+                    child: ImgPicker(
+                  width: 100,
+                  height: 100,
+                  onTap: getImage,
+                  path: _imagePath,
+                )),
+                SizedBox(
+                  height: 20,
+                ),
                 TextFormField(
                   controller: nameController,
                   decoration: InputDecoration(
                       labelText: Constants.your_name,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5))),
-                  validator: (value) => value.isEmpty ? Constants.error_empty : null,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5))),
+                  validator: (value) =>
+                      value.isEmpty ? Constants.error_empty : null,
                 ),
                 SizedBox(
                   height: 20,
@@ -130,7 +153,10 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(Constants.gender, style: Styles.sectionTitle,),
+                    Text(
+                      Constants.gender,
+                      style: Styles.sectionTitle,
+                    ),
                     GroupButton(
                       spacing: 5,
                       isRadio: true,
@@ -164,10 +190,17 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5)),
                   ),
-                  onChanged: (date){dateOfBirth = date.toString();},
+                  onChanged: (date) {
+                    dateOfBirth = date.toString();
+                  },
                   format: Util.formatDate(),
                   onShowPicker: (context, currentValue) {
-                    return showDatePicker(context: context, firstDate: DateTime(1900), initialDate: currentValue ?? DateTime.now(), lastDate: DateTime(2100),);
+                    return showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(2100),
+                    );
                   },
                 ),
                 SizedBox(
@@ -191,14 +224,15 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
                     },
                   ),
                 ),
-                _selectedPlaces == null || _selectedPlaces.isEmpty ? Container(
-                    padding: EdgeInsets.all(10),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "None selected",
-                      style: TextStyle(color: Colors.black54),
-                    )) : Container()
-                ,
+                _selectedPlaces == null || _selectedPlaces.isEmpty
+                    ? Container(
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "None selected",
+                          style: TextStyle(color: Colors.black54),
+                        ))
+                    : Container(),
                 SizedBox(
                   height: 20,
                 ),
@@ -207,28 +241,33 @@ class _RegistrationInfoSCState extends State<RegistrationInfoSC> {
                     MainButton(
                       text: Constants.continuee.toUpperCase(),
                       OnPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            Util.showProgressDialog(context);
-                            try{
-                              var interests = [];
-                              _selectedPlaces.forEach((element) {
-                                interests.add(element.name);
-                              });
+                        if (_formKey.currentState.validate()) {
+                          Util.showProgressDialog(context);
+                          try {
+                            var interests = [];
+                            _selectedPlaces.forEach((element) {
+                              interests.add(element.name);
+                            });
 
-                              var object = Users(name: nameController.text, dob: dateOfBirth, gender: isMale,
-                                  image:uploadedPath, interests: FieldValue.arrayUnion(interests));
+                            var object = Users(
+                                name: nameController.text,
+                                dob: dateOfBirth,
+                                gender: isMale,
+                                image: uploadedPath,
+                                interests: FieldValue.arrayUnion(interests));
 
-                              dbService.saveObj(UID, object).then((value){
-                                Util.pop(context); // hide progress dialog
-                                print("user added");
-                                Util.potUntil(context, MyApp.route);
-                                Util.navigate(context, HomeSC.route);
-                              });
-                            } on Exception catch(e){
-                              Util.pop(context);
-                              Util.showSnackBarWithContext(context, e.toString(), Constants.ok, 10);
-                            }
-                          } else {}
+                            dbService.saveObj(UID, object).then((value) {
+                              Util.pop(context); // hide progress dialog
+                              print("user added");
+                              Util.potUntil(context, MyApp.route);
+                              Util.navigate(context, HomeSC.route);
+                            });
+                          } on Exception catch (e) {
+                            Util.pop(context);
+                            Util.showSnackBarWithContext(
+                                context, e.toString(), Constants.ok, 10);
+                          }
+                        } else {}
                       },
                       width: MediaQuery.of(context).size.width,
                     ),
