@@ -2,9 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:phone_auth/entities/Users.dart';
 import 'package:phone_auth/util/constants.dart';
 
+import 'auth_service.dart';
+
 class DatabaseService {
 
+  DatabaseService(this.authService) {
+    uid = authService.getUser()?.uid;
+    print("Setting UID ......... $uid");
+  }
+
   static var dbInstance;
+  String uid;
+  final AuthService authService;
 
   static FirebaseFirestore init() {
     dbInstance = FirebaseFirestore.instance;
