@@ -1,16 +1,13 @@
 # phone_auth
 
-Firebase phone authentication 
+Phone authentication using firebase
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation info
+1. Clone the repository
+2. Create a project into firebase
+3. Download and Place google-services.json file into android/app
+4. From firebase project console, click on authentication menu and go to sign-in-method and enable phone authentication also add phone numbers and verification code for testing on emulator.
+6. Run the project
+5. Enjoy!
