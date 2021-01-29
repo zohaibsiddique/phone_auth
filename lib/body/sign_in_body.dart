@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///G:/Projects/Flutter/phone_auth/lib/screens/Auth/otp_screen.dart';
+import 'package:phone_auth/main.dart';
+import 'package:phone_auth/screens/Auth/registeration_info_sc.dart';
+import 'package:phone_auth/screens/otp_screen.dart';
 import 'package:phone_auth/services/auth_service.dart';
 import 'package:phone_auth/services/network_status_service.dart';
 import 'package:phone_auth/ui_components/country_code_layout.dart';
 import 'package:phone_auth/ui_components/network_aware_widget.dart';
-import '../main.dart';
 import 'package:provider/provider.dart';
 import 'package:phone_auth/ui_components/main_button.dart';
 import 'package:phone_auth/util/constants.dart';
@@ -28,6 +29,11 @@ class _SignInBDState extends State<SignInBD> {
   @override
   void initState() {
     authService = context.read<AuthService>();
+    authService.onAutoAuthenticated(() {
+      Util.potUntil(context, MyApp.route);
+      Navigator.pushNamed(context, RegistrationInfoSC.route,
+          arguments: {"phone": phone});
+    });
     super.initState();
   }
 
@@ -38,22 +44,28 @@ class _SignInBDState extends State<SignInBD> {
         padding: const EdgeInsets.all(16.0),
         child: StreamProvider<NetworkStatus>(
           create: (context) =>
-          NetworkStatusService().networkStatusController.stream,
+              NetworkStatusService().networkStatusController.stream,
           child: NetworkAwareWidget(
-              onlineChild: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Icon(Icons.wifi, color: Colors.green,),
-                  Body(context, authService, phone, isEnteredPhoneValid)
-                ],
-              ),
-              offlineChild: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Icon(Icons.wifi_off, color: Colors.red,),
-                  Body(context, authService, phone, isEnteredPhoneValid)
-                ],
-              ),
+            onlineChild: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Icon(
+                  Icons.wifi,
+                  color: Colors.green,
+                ),
+                Body(context, authService, phone, isEnteredPhoneValid)
+              ],
+            ),
+            offlineChild: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Icon(
+                  Icons.wifi_off,
+                  color: Colors.red,
+                ),
+                Body(context, authService, phone, isEnteredPhoneValid)
+              ],
+            ),
           ),
         ),
       ),
@@ -61,7 +73,8 @@ class _SignInBDState extends State<SignInBD> {
   }
 }
 
-Widget Body(BuildContext context, AuthService authService, String phone, bool isEnteredPhoneValid) {
+Widget Body(BuildContext context, AuthService authService, String phone,
+    bool isEnteredPhoneValid) {
   verifyPhone(String phone) {
     Util.showProgressDialog(context);
     authService.verify(phone);
@@ -71,30 +84,33 @@ Widget Body(BuildContext context, AuthService authService, String phone, bool is
           arguments: {"phone": phone});
     });
     authService.onAuthError((e) {
-      print(e.toString()+" error on auth");
+      print(e.toString() + " error on auth");
       Util.pop(context); //do invisible progress dialog
-      Util.showSnackBarWithContext(context, (e as FirebaseAuthException).message ?? Constants.server_error, "OK", 10);
+      Util.showSnackBarWithContext(
+          context,
+          (e as FirebaseAuthException).message ?? Constants.server_error,
+          "OK",
+          10);
     });
   }
+
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              height: 100,
-              width: 100,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              Constants.appTitle,
-              style: Styles.screenTitle,
-            ),
-          ]),
+      Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Image.asset(
+          'assets/images/logo.png',
+          height: 100,
+          width: 100,
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Text(
+          Constants.appTitle,
+          style: Styles.screenTitle,
+        ),
+      ]),
       SizedBox(
         height: 150,
       ),
@@ -138,10 +154,12 @@ Widget Body(BuildContext context, AuthService authService, String phone, bool is
           ),
           MainButton(
               text: Constants.next.toUpperCase(),
-              OnPressed: isEnteredPhoneValid? () {
-                print("Trying to verify");
-                verifyPhone(phone);
-              } : null,
+              OnPressed: isEnteredPhoneValid
+                  ? () {
+                      print("Trying to verify");
+                      verifyPhone(phone);
+                    }
+                  : null,
               width: MediaQuery.of(context).size.width),
         ],
       ),
